@@ -28,5 +28,5 @@ createServer((request, response) => {
   response.setHeader("Cache-Control", "no-store");
   createReadStream(filePath).pipe(response);
 }).listen(port, "127.0.0.1", () => {
-  console.log(`Oxford Phonics preview: http://127.0.0.1:${port}/p01-a7m4k2/`);
+  console.log(`Phonics 1 preview: http://127.0.0.1:${port}/p01-a7m4k2/`);
 });

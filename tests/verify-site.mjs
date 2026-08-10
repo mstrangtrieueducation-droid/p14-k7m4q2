@@ -26,6 +26,7 @@ assert.match(lesson, /<h1[^>]*>.*Aa.*Bb.*<\/h1>/s);
 assert.equal((lesson.match(/<iframe/g) || []).length, 5);
 assert.match(styles, /@media \(max-width: 560px\)/);
 assert.doesNotMatch(lesson, /Google Sites/);
+assert.doesNotMatch(lesson, /Oxford/i);
 assert.doesNotMatch(lesson, /\bBé\b|\bbé\b/);
 
 console.log("Phonics Lesson 01 static checks passed.");

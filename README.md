@@ -1,6 +1,6 @@
-# Oxford Phonics 1-4
+# Phonics 1
 
-Static GitHub Pages site for individual Oxford Phonics lessons.
+Static GitHub Pages site for individual Phonics 1 lessons.
 
 - Lesson 01: `p01-a7m4k2/`
 - Homework code: `OP1-L01`
