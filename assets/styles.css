@@ -1,12 +1,12 @@
 :root {
-  --ink: #15304a;
+  --ink: #10183f;
   --muted: #50657a;
   --teal: #087f79;
-  --teal-dark: #075c59;
+  --teal-dark: #0b1239;
   --teal-light: #dff7f3;
   --coral: #f2655b;
   --coral-light: #fff0ec;
-  --yellow: #f6c94c;
+  --yellow: #e6bd45;
   --yellow-light: #fff8dc;
   --green: #4c9f70;
   --green-light: #e9f7ed;
@@ -54,7 +54,8 @@ a {
   position: relative;
   z-index: 10;
   background: var(--white);
-  border-bottom: 1px solid rgba(21, 48, 74, 0.1);
+  border-top: 5px solid var(--yellow);
+  border-bottom: 1px solid rgba(16, 24, 63, 0.12);
 }
 
 .topbar__inner,
@@ -64,7 +65,7 @@ a {
 }
 
 .topbar__inner {
-  min-height: 84px;
+  min-height: 102px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
@@ -76,21 +77,29 @@ a {
 }
 
 .brand-logo {
-  width: 62px;
-  height: 62px;
+  width: 76px;
+  height: 76px;
   object-fit: contain;
 }
 
 .series,
 .lesson-label,
+.brand-name,
 .hero__eyebrow,
 .kicker {
   margin: 0;
   letter-spacing: 0;
 }
 
+.brand-name {
+  color: #9a7413;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .series {
-  color: var(--teal-dark);
+  color: var(--ink);
   font-size: 14px;
   font-weight: 800;
   text-transform: uppercase;
@@ -343,6 +352,38 @@ h2 {
   margin: 0;
   color: var(--muted);
   font-size: 18px;
+}
+
+.recording-guide {
+  margin-top: 22px;
+  padding: 18px 0 2px 20px;
+  border-left: 5px solid var(--yellow);
+}
+
+.recording-guide h3 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.recording-guide ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.recording-guide li {
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.recording-guide > p {
+  margin: 15px 0 0 !important;
+  padding: 12px 14px;
+  color: #332700 !important;
+  background: var(--yellow-light);
+  border-radius: 6px;
+  font-size: 16px !important;
 }
 
 .section-icon {
@@ -598,13 +639,17 @@ footer img {
   }
 
   .topbar__inner {
-    min-height: 74px;
+    min-height: 88px;
     gap: 10px;
   }
 
   .brand-logo {
-    width: 52px;
-    height: 52px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .brand-name {
+    font-size: 9px;
   }
 
   .series {
@@ -613,7 +658,7 @@ footer img {
   }
 
   .lesson-label {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .lesson-badge {

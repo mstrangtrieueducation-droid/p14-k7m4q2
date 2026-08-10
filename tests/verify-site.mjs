@@ -19,10 +19,13 @@ for (const driveId of requiredDriveIds) {
 }
 
 assert.match(lesson, /entry\.1077842338=OP1-L01/);
+assert.match(lesson, /video quay màn hình bằng chính file PDF ở Bước 3/);
+assert.match(lesson, /Khẩu hình đúng; phát đủ âm, rõ âm cuối \(âm đuôi\)/);
 assert.match(lesson, /<meta charset="UTF-8"/);
 assert.match(lesson, /<h1[^>]*>.*Aa.*Bb.*<\/h1>/s);
 assert.equal((lesson.match(/<iframe/g) || []).length, 5);
 assert.match(styles, /@media \(max-width: 560px\)/);
 assert.doesNotMatch(lesson, /Google Sites/);
+assert.doesNotMatch(lesson, /\bBé\b|\bbé\b/);
 
 console.log("Phonics Lesson 01 static checks passed.");
