@@ -3,30 +3,53 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const lesson = await readFile(path.join(root, "p01-a7m4k2", "index.html"), "utf8");
+const data = JSON.parse(await readFile(path.join(root, "content", "lessons.json"), "utf8"));
 const styles = await readFile(path.join(root, "assets", "styles.css"), "utf8");
+const sharedFormId = "1FAIpQLSfVb8hr81rovsmv8PtaWtGVD1EuJy9e4oF11kAFodUfnIbvog";
 
-const requiredDriveIds = [
-  "1EdlGzsad7Rked-R3vJ_tM9zJnkodaNiV",
-  "16HZxI0xCxXOcnaFrHzKWbTF_gzgdRDR3",
-  "1l8XZZOp3M2TgdpAPYlO8ArqTpJLqwkb6",
-  "14dPaG56p748htwib5Wwj_VSu4mWUSu0L",
-  "1BQegqoH18-kZR7AmSMMXzWfU1DeQPbZZ",
+assert.equal(data.lessons.length, 49, "Expected every lesson folder currently present in Drive");
+assert.deepEqual(
+  Object.fromEntries([1, 2, 3, 4].map((level) => [level, data.lessons.filter((lesson) => lesson.level === level).length])),
+  { 1: 13, 2: 14, 3: 16, 4: 6 },
+);
+
+const missingSourceFolders = [
+  [1, 7],
+  [2, 7],
+  [3, 9],
 ];
-
-for (const driveId of requiredDriveIds) {
-  assert.match(lesson, new RegExp(driveId), `Missing Drive asset ${driveId}`);
+for (const [level, lesson] of missingSourceFolders) {
+  assert.equal(data.lessons.some((item) => item.level === level && item.lesson === lesson), false);
 }
 
-assert.match(lesson, /entry\.1077842338=OP1-L01/);
-assert.match(lesson, /video quay màn hình bằng chính file PDF ở Bước 3/);
-assert.match(lesson, /Khẩu hình đúng; phát đủ âm, rõ âm cuối \(âm đuôi\)/);
-assert.match(lesson, /<meta charset="UTF-8"/);
-assert.match(lesson, /<h1[^>]*>.*Aa.*Bb.*<\/h1>/s);
-assert.equal((lesson.match(/<iframe/g) || []).length, 5);
-assert.match(styles, /@media \(max-width: 560px\)/);
-assert.doesNotMatch(lesson, /Google Sites/);
-assert.doesNotMatch(lesson, /Oxford/i);
-assert.doesNotMatch(lesson, /\bBé\b|\bbé\b/);
+for (const item of data.lessons) {
+  const html = await readFile(path.join(root, item.slug, "index.html"), "utf8");
+  const formPattern = new RegExp(`entry\\.1077842338=${item.code}`);
 
-console.log("Phonics Lesson 01 static checks passed.");
+  assert.match(html, /<meta charset="UTF-8"/);
+  assert.match(html, new RegExp(`Phonics ${item.level}`));
+  assert.match(html, new RegExp(`/d/e/${sharedFormId}/viewform`), `${item.code} points to the wrong Form`);
+  assert.match(html, formPattern, `${item.code} is not prefilled in its Form URL`);
+  assert.match(html, /quay màn hình/i);
+  assert.match(html, /Khẩu hình đúng; phát đủ âm, rõ âm cuối \(âm đuôi\)/);
+  assert.doesNotMatch(html, /Google Sites/);
+  assert.doesNotMatch(html, /Oxford/i);
+  assert.doesNotMatch(html, /\bBé\b|\bbé\b/);
+
+  const checkedLogicalFiles = new Set();
+  for (const file of item.files) {
+    const logicalFileKey = file.title.replace(/\.[^.]+$/, "").toLocaleLowerCase("vi");
+    if (checkedLogicalFiles.has(logicalFileKey)) continue;
+    checkedLogicalFiles.add(logicalFileKey);
+
+    if (file.mimeType.startsWith("video/") || file.mimeType.startsWith("audio/") || file.mimeType === "application/pdf" || file.mimeType === "application/vnd.google-apps.presentation") {
+      assert.match(html, new RegExp(file.id), `${item.code} is missing ${file.title}`);
+    }
+  }
+}
+
+assert.match(styles, /@media \(max-width: 560px\)/);
+assert.match(styles, /\.audio-list/);
+assert.match(styles, /\.hero__topic--compact/);
+
+console.log("All 49 Phonics lesson pages passed static checks.");

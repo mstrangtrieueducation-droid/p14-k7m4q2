@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/verify-site.mjs",
+    "generate": "node scripts/generate-course.mjs",
+    "test": "node scripts/generate-course.mjs && node tests/verify-site.mjs",
     "serve": "node scripts/serve.mjs"
   }
 }
