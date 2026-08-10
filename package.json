@@ -1,0 +1,9 @@
+{
+  "name": "oxford-phonics-1-4-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/verify-site.mjs",
+    "serve": "node scripts/serve.mjs"
+  }
+}
