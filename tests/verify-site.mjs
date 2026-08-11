@@ -5,7 +5,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const data = JSON.parse(await readFile(path.join(root, "content", "lessons.json"), "utf8"));
 const styles = await readFile(path.join(root, "assets", "styles.css"), "utf8");
-const sharedFormId = "1FAIpQLSfVb8hr81rovsmv8PtaWtGVD1EuJy9e4oF11kAFodUfnIbvog";
+const sharedFormId = "1FAIpQLScBAmLa0utUwcdJ8frHTHXpfTE2zgsIF8hXthSxSd7KoqDANQ";
 
 assert.equal(data.lessons.length, 49, "Expected every lesson folder currently present in Drive");
 assert.deepEqual(
