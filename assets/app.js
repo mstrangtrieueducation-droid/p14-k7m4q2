@@ -39,11 +39,6 @@ const addDriveFallbacks = () => {
     openButton.rel = "noopener";
     openButton.innerHTML = '<i data-lucide="external-link" aria-hidden="true"></i>Mở bằng Drive';
     actions.append(openButton);
-
-    const help = document.createElement("p");
-    help.className = "media-help";
-    help.textContent = "Video chưa chạy? Hãy đăng nhập Google rồi mở bằng Drive.";
-    block.append(help);
   });
 };
 

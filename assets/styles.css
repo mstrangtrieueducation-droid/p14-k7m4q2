@@ -470,13 +470,6 @@ h2 {
   gap: 10px;
 }
 
-.media-help {
-  margin: 8px 0 0;
-  color: #475c66;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
 .sound-band--a {
   color: #632d27;
   background: var(--coral-light);

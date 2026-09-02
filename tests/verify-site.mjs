@@ -63,9 +63,8 @@ for (const item of data.lessons) {
 assert.match(styles, /@media \(max-width: 560px\)/);
 assert.match(styles, /\.audio-list/);
 assert.match(styles, /\.hero__topic--compact/);
-assert.match(styles, /\.media-help/);
 assert.match(appScript, /addDriveFallbacks/);
 assert.match(appScript, /Mở bằng Drive/);
-assert.match(appScript, /Hãy đăng nhập Google rồi mở bằng Drive/);
+assert.doesNotMatch(appScript, /đăng nhập Google/i);
 
 console.log("All 49 Phonics lesson pages passed static checks.");
