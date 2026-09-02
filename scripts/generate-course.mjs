@@ -13,7 +13,9 @@ const escapeHtml = (value) =>
 
 const fileStem = (title) => title.replace(/\.[^.]+$/, "");
 const titleKey = (file) => file.title.toLocaleLowerCase("vi");
-const isVideo = (file) => file.mimeType.startsWith("video/");
+const googleVidsMimeType = "application/vnd.google-apps.vid";
+const isGoogleVids = (file) => file.mimeType === googleVidsMimeType;
+const isVideo = (file) => file.mimeType.startsWith("video/") || isGoogleVids(file);
 const isTeacherVideo = (file) => isVideo(file) && titleKey(file).includes("dặn con");
 const isParentVideo = (file) => isVideo(file) && titleKey(file).includes("bố mẹ");
 const isPracticeVideo = (file) => isVideo(file) && !isTeacherVideo(file) && !isParentVideo(file);
@@ -33,7 +35,9 @@ const displayFileTitle = (file) =>
     .trim();
 
 const embedUrl = (file) =>
-  file.mimeType === "application/vnd.google-apps.presentation"
+  isGoogleVids(file)
+    ? `https://docs.google.com/videos/d/${file.id}/play`
+    : file.mimeType === "application/vnd.google-apps.presentation"
     ? `https://docs.google.com/presentation/d/${file.id}/preview`
     : `https://drive.google.com/file/d/${file.id}/preview`;
 
@@ -107,7 +111,8 @@ const renderAudioSection = (files) => {
 };
 
 const renderLesson = (lesson) => {
-  const teacher = lesson.files.find(isTeacherVideo);
+  const teacherVideos = lesson.files.filter(isTeacherVideo);
+  const teacher = teacherVideos.find(isGoogleVids) || teacherVideos[0];
   const parent = lesson.files.find(isParentVideo);
   const practice = lesson.files.filter(isPracticeVideo);
   const audio = lesson.files.filter(isAudio);
